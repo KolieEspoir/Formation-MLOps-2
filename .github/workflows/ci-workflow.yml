@@ -23,3 +23,7 @@ jobs:
         run: uv run pytest
       - name: Run functional tests
         run: uv run behave tests/test_functional/features
+      - name: Quality
+        run: |
+          uv run pytest --cov=formation_mlops_2/ tests/test_unit/ -vv -p no:warnings
+          ./tests/tests_pyramid.sh
