@@ -1,20 +1,15 @@
-"""Architecture test.
-
-Vérifie que tous les appels à `to_csv` faits dans le package
-`formation_mlops_2` sont bien appelés avec l'argument `index=False`.
-
-Cela évite d'écrire l'index du DataFrame dans les fichiers CSV générés
-(données, prédictions, etc.).
-"""
-
 from pathlib import Path
 
 PACKAGE_ROOT = Path(__file__).parents[2] / "formation_mlops_2"
 
 
-
 def test_to_csv_called_with_index_false():
-    # Given
-    # plop
+    for file_path in PACKAGE_ROOT.rglob("*.py"):
+        content = file_path.read_text()
 
-    assert False # noqa: B011
+        nb_to_csv = content.count(".to_csv(")
+        nb_index_false = content.count("index=False")
+
+        assert nb_to_csv == nb_index_false, (
+            f"{file_path}: tous les appels à to_csv doivent utiliser index=False"
+        )
